@@ -1,3 +1,4 @@
+CREATE DATABASE Ventas_Tech_DB;
 
 -- SECCION 1 DROP
 
@@ -83,4 +84,3 @@ SELECT * FROM categorias;   -- esperado: 4 filas
 SELECT * FROM clientes;     -- esperado: 5 filas
 SELECT * FROM productos;    -- esperado: 6 filas
 SELECT * FROM ventas;       -- esperado: 10 filas
-
