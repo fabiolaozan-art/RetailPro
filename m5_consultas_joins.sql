@@ -37,28 +37,28 @@ LEFT JOIN ventas v ON p.id_producto = v.id_producto
 WHERE v.id_venta IS NULL;
 
 
--- Consulta 4: Consolidado por origen temporal (UNION ALL + GROUP BY)
--- Segmenta las ventas de marzo en dos quincenas y agrupa el resultado final.
-WITH VentasClasificadas AS (
+-- Consulta 4: 
+SELECT 
+    canal,
+    COUNT(*) AS cantidad_ventas,
+    SUM(total) AS facturacion_total
+FROM (
+    -- Primer SELECT: columna 'Online'
     SELECT 
-        fecha_venta,
-        (cantidad * precio_unitario) AS total,
-        'Primera Quincena' AS periodo_comercial
-    FROM ventas
-    WHERE fecha_venta <= '2024-03-10'
+        fecha_venta, 
+        (cantidad * precio_unitario) AS total, 
+        'Online' AS canal 
+    FROM ventas 
+    WHERE id_cliente IN (1, 2)
     
     UNION ALL
     
+    -- Segundo SELECT: columna'Presencial'
     SELECT 
-        fecha_venta,
-        (cantidad * precio_unitario) AS total,
-        'Segunda Quincena' AS periodo_comercial
-    FROM ventas
-    WHERE fecha_venta > '2024-03-10'
-)
-SELECT 
-    periodo_comercial,
-    COUNT(*) AS cantidad_operaciones,
-    SUM(total) AS facturacion_total
-FROM VentasClasificadas
-GROUP BY periodo_comercial;
+        fecha_venta, 
+        (cantidad * precio_unitario) AS total, 
+        'Presencial' AS canal 
+    FROM ventas 
+    WHERE id_cliente IN (3, 4, 5)
+) AS ventas_consolidadas
+GROUP BY canal;
