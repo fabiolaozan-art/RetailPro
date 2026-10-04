@@ -1,6 +1,8 @@
+-- 1. Crear la base de datos
+CREATE DATABASE Ventas_Tech_DB;
+USE Ventas_Tech_DB;
 
 -- SECCION 1 DROP
-
 DROP TABLE IF EXISTS ventas;
 DROP TABLE IF EXISTS productos;
 DROP TABLE IF EXISTS clientes;
@@ -9,8 +11,8 @@ DROP TABLE IF EXISTS categorias;
 -- SECCION 2 CREATE
 CREATE TABLE categorias (
     id_categoria INT PRIMARY KEY,
-    nombre_categoria VARCHAR(50) NOT NULL,
-    descripcion VARCHAR(200)
+    nombre_categoria VARCHAR(100) NOT NULL,
+    descripcion VARCHAR(200) 
 );
 
 CREATE TABLE clientes (
@@ -25,7 +27,7 @@ CREATE TABLE productos (
     id_producto INT PRIMARY KEY,
     nombre_producto VARCHAR(100) NOT NULL,
     id_categoria INT,
-    precio DECIMAL(10,2) NOT NULL,
+    precio DECIMAL(10, 2) NOT NULL,
     stock INT DEFAULT 0,
     activo BIT DEFAULT 1,
     FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria)
@@ -36,7 +38,7 @@ CREATE TABLE ventas (
     id_cliente INT,
     id_producto INT,
     cantidad INT NOT NULL,
-    precio_unitario DECIMAL(10,2) NOT NULL,
+    precio_unitario DECIMAL(10, 2) NOT NULL,
     fecha_venta DATE NOT NULL,
     FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente),
     FOREIGN KEY (id_producto) REFERENCES productos(id_producto)
@@ -79,8 +81,7 @@ INSERT INTO ventas (id_venta, id_cliente, id_producto, cantidad, precio_unitario
 
   -- SECCION 4 VALIDACION
 
-SELECT * FROM categorias;   -- esperado: 4 filas
-SELECT * FROM clientes;     -- esperado: 5 filas
-SELECT * FROM productos;    -- esperado: 6 filas
-SELECT * FROM ventas;       -- esperado: 10 filas
-
+SELECT * FROM categorias;   
+SELECT * FROM clientes;     
+SELECT * FROM productos;    
+SELECT * FROM ventas;       
